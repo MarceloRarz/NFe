@@ -1,0 +1,34 @@
+//  { Método validar ** Tarefa #13044 - Júlio César - Validações para tabelas temporárias continuam no próprio cadastro - Validação Transferida para uCriticasSocioDiretor ** }
+//  if dsTempValeRefeicaoDiretor.DataSet.FieldByName('idvalerefeicao').AsInteger > 0 then
+//    begin
+//
+//      if ( dsTempValeRefeicaoDiretor.DataSet.FieldByName('tabeladias').AsInteger <= 0 ) and ( dsGrupoPagamento.DataSet.FieldByName('baseProcessoVales').AsString <> 'E') then
+//        fObjCriticas.AddErro( 'refeicaoTabelaDias', 'Vale-refeição: Tabela de dias não selecionada' );
+//
+//      if dsTempValeRefeicaoDiretor.DataSet.FieldByName('quantidadepordia').AsInteger <= 0 then
+//        fObjCriticas.AddErro( 'refeicaoQuantidadePorDia', 'Vale-refeição: Quantidade por dia não informada' );
+//
+//    end;
+//
+//  if (dsTempValeTransporteItens.DataSet.RecordCount > 0) or
+//    ( (dsTempValeTransporteItens.DataSet.RecordCount = 0) and (Trim(txtBilheteEletronico.Text) <> EmptyStr)) then
+//    begin
+//
+//      if DBLookupComboBoxTabelaDiasValeTransporte.Enabled and
+//         ( Trim(DBLookupComboBoxTabelaDiasValeTransporte.Text) = EmptyStr ) then
+//        fObjCriticas.AddErro( 'transporteTabelaDias', 'Vale-transporte: Tabela de dias não selecionada' );
+//
+//      if ( txtPercentualValeTransporte.Field.IsNull ) then
+//        fObjCriticas.AddErro( 'transportePercentualDesconto', 'Vale-transporte: Percentual de desconto não informado' )
+//      else
+//        begin
+//          with qrParametrosGerais.FieldByName( 'percentualMaximoVT' ) do
+//            if not IsNull then
+//              if txtPercentualValeTransporte.Field.AsCurrency > AsCurrency then
+//                fObjCriticas.AddErro( 'transportePercentualDesconto', 'O % de desconto do vale transporte informado é superior ao máximo definido nos parâmetros' );
+//        end;
+//
+//    end;
+//
+//  { ** Tarefa #13044 - Júlio César - Realizando a validação do cadastro ** }
+//  result := inherited validar;

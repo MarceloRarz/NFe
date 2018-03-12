@@ -1,0 +1,43 @@
+{  // ** Validando o cadastro de pessoas validação mirada para uCriticasPessoa**
+  result := True;
+
+  if Assigned( fObjCriticas ) then
+    begin
+
+      // ** Informando o temporário para a validação dos dependentes **
+      TCriticasPessoa( fObjCriticas ).SetDataSetDependentes( TmpDependentes );
+
+      // ** Validando a senha do portal RH3 **
+      if not Trim( txtSenhaPortal.Text ).IsEmpty then
+        begin
+
+          strSenhaPortal := '';
+
+          if not validarSenhaPortal( txtSenhaPortal.Text, strSenhaPortal ) then
+            fObjCriticas.AddErro( 'portal_senha', 'Senha do Portal Web inválida: ' + strSenhaPortal.Trim );
+
+        end;
+
+      // ** Validando o cadastro em seu respectivo nível **
+      fObjCriticas.Validate;
+
+      // ** Exibindo as ocorrencias **
+      fObjCriticas.Show;
+
+      // ** O padrão do sistema é só permitir se não houver erros nas validações **
+      result := not fObjCriticas.HasErros and not fObjCriticas.IsFormCancelado;
+
+      // ** Validando matrículas iguais **
+      lMatriculasIguais := TCriticasPessoa( fObjCriticas ).HasSameMatricula;
+
+      // ** Limpando o campo da matrícula quando houver erros para o mesmo **
+      if fObjCriticas.HasErros( 'codigo' ) then
+        if DataSource1.DataSet.State in [dsInsert, dsEdit] then
+          txtMatricula.Field.Clear;
+
+      // ** Resetando o objeto para evitar validações repetidas **
+      fObjCriticas.Clear;
+
+    end;
+
+    }
