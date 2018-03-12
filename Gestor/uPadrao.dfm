@@ -1,0 +1,95 @@
+object frmPadrao: TfrmPadrao
+  Left = 0
+  Top = 0
+  BorderIcons = [biSystemMenu]
+  ClientHeight = 398
+  ClientWidth = 618
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object pnlPersistir: TPanel
+    Left = 0
+    Top = 357
+    Width = 618
+    Height = 41
+    Align = alBottom
+    TabOrder = 0
+    object btnEditar: TBitBtn
+      AlignWithMargins = True
+      Left = 296
+      Top = 7
+      Width = 75
+      Height = 27
+      Margins.Top = 6
+      Margins.Bottom = 6
+      Align = alRight
+      Caption = 'Editar'
+      TabOrder = 0
+      OnClick = btnEditarClick
+    end
+    object btnSalvar: TBitBtn
+      AlignWithMargins = True
+      Left = 377
+      Top = 7
+      Width = 75
+      Height = 27
+      Margins.Top = 6
+      Margins.Bottom = 6
+      Align = alRight
+      Caption = 'Salvar'
+      Enabled = False
+      TabOrder = 1
+      OnClick = btnSalvarClick
+    end
+    object btnExcluir: TBitBtn
+      AlignWithMargins = True
+      Left = 458
+      Top = 7
+      Width = 75
+      Height = 27
+      Margins.Top = 6
+      Margins.Bottom = 6
+      Align = alRight
+      Caption = 'Excluir'
+      TabOrder = 2
+      OnClick = btnExcluirClick
+    end
+    object btnFechar: TBitBtn
+      AlignWithMargins = True
+      Left = 539
+      Top = 7
+      Width = 75
+      Height = 27
+      Margins.Top = 6
+      Margins.Bottom = 6
+      Align = alRight
+      Caption = 'Fechar'
+      TabOrder = 3
+      OnClick = btnExcluirClick
+    end
+    object btnInserir: TBitBtn
+      AlignWithMargins = True
+      Left = 215
+      Top = 7
+      Width = 75
+      Height = 27
+      Margins.Top = 6
+      Margins.Bottom = 6
+      Align = alRight
+      Caption = 'Inserir'
+      TabOrder = 4
+      OnClick = btnInserirClick
+    end
+  end
+  object dsPadrao: TDataSource
+    Left = 368
+    Top = 24
+  end
+end
