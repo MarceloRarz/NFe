@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><nfeProc versao="3.10" xmlns="http://www.portalfiscal.inf.br/nfe"><NFe xmlns="http://www.portalfiscal.inf.br/nfe"><infNFe Id="NFe31180104156194000412550010002856361031617538" versao="3.10"><ide><cUF>31</cUF><cNF>03161753</cNF><natOp>VENDA DE MERCADORIA ADQUIRIDA OU RECEBIDA DE TERCEIROS</natOp><indPag>1</indPag><mod>55</mod><serie>1</serie><nNF>285636</nNF><dhEmi>2018-01-16T17:54:37-02:00</dhEmi><tpNF>1</tpNF><idDest>2</idDest><cMunFG>3125101</cMunFG><tpImp>1</tpImp><tpEmis>1</tpEmis><cDV>8</cDV><tpAmb>1</tpAmb><finNFe>1</finNFe><indFinal>0</indFinal><indPres>9</indPres><procEmi>0</procEmi><verProc>3.56.1.2</verProc></ide><emit><CNPJ>04156194000412</CNPJ><xNome>NAKATA AUTOMOTIVA S.A.</xNome><xFant>NAKATA AUTOMOTIVA S.A.</xFant><enderEmit><xLgr>RUA JOSEPHA GOMES DE SOUZA</xLgr><nro>96</nro><xBairro>B. DOS PIRES</xBairro><cMun>3125101</cMun><xMun>EXTREMA</xMun><UF>MG</UF><CEP>37640000</CEP><cPais>1058</cPais><xPais>BRASIL</xPais><fone>5503534357900</fone></enderEmit><IE>2513630250047</IE><CRT>3</CRT></emit><dest><CNPJ>11509676000121</CNPJ><xNome>AUTO NORTE DISTR. DE PECAS LTDA.</xNome><enderDest><xLgr>RUA PROF.NESTOR BEZERRA</xLgr><nro>266</nro><xBairro>VARZEA</xBairro><cMun>2611606</cMun><xMun>RECIFE</xMun><UF>PE</UF><CEP>50950150</CEP><cPais>1058</cPais><xPais>BRASIL</xPais><fone>00518121252000</fone></enderDest><indIEDest>1</indIEDest><IE>006830609</IE><email>NFE.MATRIZ@AUTONORTE.COM.BR</email></dest><det nItem="1"><prod><cProd>N 1068</cProd><cEAN>7897499924275</cEAN><xProd>BIELETA</xProd><NCM>87089990</NCM><CEST>0107500</CEST><CFOP>6102</CFOP><uCom>PC</uCom><qCom>1.0000</qCom><vUnCom>12.490000</vUnCom><vProd>12.49</vProd><cEANTrib /><uTrib>PC</uTrib><qTrib>1.0000</qTrib><vUnTrib>12.490000</vUnTrib><indTot>1</indTot><xPed>N 1068</xPed></prod><imposto><ICMS><ICMS00><orig>1</orig><CST>00</CST><modBC>3</modBC><vBC>12.49</vBC><pICMS>4.00</pICMS><vICMS>0.50</vICMS></ICMS00></ICMS><IPI><cEnq>999</cEnq><IPITrib><CST>50</CST><vBC>12.49</vBC><pIPI>5.00</pIPI><vIPI>0.62</vIPI></IPITrib></IPI><PIS><PISAliq><CST>02</CST><vBC>12.49</vBC><pPIS>2.30</pPIS><vPIS>0.29</vPIS></PISAliq></PIS><COFINS><COFINSAliq><CST>02</CST><vBC>12.49</vBC><pCOFINS>10.80</pCOFINS><vCOFINS>1.35</vCOFINS></COFINSAliq></COFINS></imposto></det><total><ICMSTot><vBC>12.49</vBC><vICMS>0.50</vICMS><vICMSDeson>0.00</vICMSDeson><vFCPUFDest>0.00</vFCPUFDest><vICMSUFDest>0.00</vICMSUFDest><vICMSUFRemet>0.00</vICMSUFRemet><vBCST>0.00</vBCST><vST>0.00</vST><vProd>12.49</vProd><vFrete>0.00</vFrete><vSeg>0.00</vSeg><vDesc>0.00</vDesc><vII>0.00</vII><vIPI>0.62</vIPI><vPIS>0.29</vPIS><vCOFINS>1.35</vCOFINS><vOutro>0.00</vOutro><vNF>13.11</vNF><vTotTrib>0.00</vTotTrib></ICMSTot></total><transp><modFrete>0</modFrete><transporta><xNome>RETIRA</xNome><xMun>SAO PAULO</xMun><UF>SP</UF></transporta><vol><qVol>1</qVol><esp>VOLUMES</esp><marca>NA</marca><nVol>NA</nVol><pesoL>0.250</pesoL><pesoB>0.250</pesoB><lacres><nLacre>NA</nLacre></lacres></vol></transp><cobr><fat><nFat>0000000000</nFat></fat><dup><nDup>285636/1</nDup><dVenc>2018-05-31</dVenc><vDup>13.11</vDup></dup></cobr><infAdic><infCpl>( Pre-nota  335820 )ICMS PREST SERV TRANSP RESPONSABILIDADE ALIENANTE/REMETENTE.REF BO 003158/2017PORTADOR REGIME ESPECIAL 10329082011000002255162-11ICMS PREST SERV TRANSP RESPONSABILIDADE ALIENANTE/REMETENTENota Fiscal emitida nos termos da Resolucao 13/2012 do Senado Federal, Ajuste Sinief 19/2012 e 27/2012</infCpl></infAdic></infNFe><Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI="#NFe31180104156194000412550010002856361031617538"><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>ttaYV4DGE7zO88lgUM62hkB9Nks=</DigestValue></Reference></SignedInfo><SignatureValue>Zl1oxUmRUNj0zaDObCuSWIxfSJqKbxZF9B+Iqw1Zj7hbE+vqxS8HG2Gtl9NfFU/TbyTDV8yqf7yv
+8YvCDVYwfcXwU7GF2hmFYWOhnpte5fcn4F2rU65H6u6wMplBU4aWa5hWXN4CA/zSnhSSP1SCuH2D
+Uh8mDOEEsMwcI3gnf23y3lDY+9Z1zGKDmeCBuW8t5RHq6S7hyqUyW1K7tGVUHGnbYEMDb3kbH7rj
+g0WqmI82MPmBAiQ2BhZJ2MezY0XLqSzNPmjut3ZArGH7n2MCvvM6OS/EbocB29x4d7kCDD+j0pkE
+pcZY4n9vYwedt0EpSPy5ExEa0Rh/GG4Sh8mykg==</SignatureValue><KeyInfo><X509Data><X509Certificate>MIIHcjCCBVqgAwIBAgIIHp46AezoXI8wDQYJKoZIhvcNAQELBQAwTDELMAkGA1UEBhMCQlIxEzAR
+BgNVBAoMCklDUC1CcmFzaWwxKDAmBgNVBAMMH1NFUkFTQSBDZXJ0aWZpY2Fkb3JhIERpZ2l0YWwg
+djUwHhcNMTcxMDA0MTMzMzAwWhcNMTgxMDA0MTMzMzAwWjCB3zELMAkGA1UEBhMCQlIxEzARBgNV
+BAoMCklDUC1CcmFzaWwxFDASBgNVBAsMCyhFTSBCUkFOQ08pMRgwFgYDVQQLDA8wMDAwMDEwMDgx
+MzYwNjExFDASBgNVBAsMCyhFTSBCUkFOQ08pMRQwEgYDVQQLDAsoRU0gQlJBTkNPKTEUMBIGA1UE
+CwwLKEVNIEJSQU5DTykxFDASBgNVBAsMCyhFTSBCUkFOQ08pMRQwEgYDVQQLDAsoRU0gQlJBTkNP
+KTEdMBsGA1UEAwwUTkFLQVRBIEFVVE9NT1RJVkEgU0EwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAw
+ggEKAoIBAQCRDFDGeTeu/akQFaxDCalTJXJld+xsLMVzMRDCsGR9n96PizqB165dzrmHLNUR/+xG
+2DS2FqEOjC8mtQfN+BGSiSmmuIyfNqfnfwkBOG50z1N1SmaE9iT6mOqRv349tDl0Rb7vQ6K97js1
+NMr9fEKAZoFr+bUVClIVLKpDSJ72D1KOMLOmulsWQEt+4IrHAjbcZHZBaVAeOngXydoKnlV74Owy
+SLPyF1ms/GwSzRjvKNLaHBtBS2XE33R783TamPhGelfC6zB6wOhsC0faciY4zXCfaOIIti2MZEu8
+6lAOF8LH5xSUVYmNU5BqxJtQcN1JkA5PkUNBjfjduer5rdi3AgMBAAGjggLCMIICvjAfBgNVHSME
+GDAWgBRWda9Kc7LYCMR9+2woHBHV98GozDCBlwYIKwYBBQUHAQEEgYowgYcwRwYIKwYBBQUHMAKG
+O2h0dHA6Ly93d3cuY2VydGlmaWNhZG9kaWdpdGFsLmNvbS5ici9jYWRlaWFzL3NlcmFzYWNkdjUu
+cDdiMDwGCCsGAQUFBzABhjBodHRwOi8vb2NzcC5jZXJ0aWZpY2Fkb2RpZ2l0YWwuY29tLmJyL3Nl
+cmFzYWNkdjUwgcAGA1UdEQSBuDCBtYEeUEFNTUVMQS5DUklTVElOQUBOQUtBVEEuQ09NLkJSoD4G
+BWBMAQMEoDUTMzI1MTIxOTY3MTExOTE1OTY4NzcwMDAwMDAwMDAwMDAwMDAwMDAxOTMyNjU5N1NT
+UCBTUKAfBgVgTAEDAqAWExRTRVJHSU8gSEVNTUVMIEhFU1NFTKAZBgVgTAEDA6AQEw4wNDE1NjE5
+NDAwMDE3MKAXBgVgTAEDB6AOEwwwMDAwMDAwMDAwMDAwcQYDVR0gBGowaDBmBgZgTAECAQYwXDBa
+BggrBgEFBQcCARZOaHR0cDovL3B1YmxpY2FjYW8uY2VydGlmaWNhZG9kaWdpdGFsLmNvbS5ici9y
+ZXBvc2l0b3Jpby9kcGMvZGVjbGFyYWNhby1zY2QucGRmMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggr
+BgEFBQcDBDCBmwYDVR0fBIGTMIGQMEmgR6BFhkNodHRwOi8vd3d3LmNlcnRpZmljYWRvZGlnaXRh
+bC5jb20uYnIvcmVwb3NpdG9yaW8vbGNyL3NlcmFzYWNkdjUuY3JsMEOgQaA/hj1odHRwOi8vbGNy
+LmNlcnRpZmljYWRvcy5jb20uYnIvcmVwb3NpdG9yaW8vbGNyL3NlcmFzYWNkdjUuY3JsMA4GA1Ud
+DwEB/wQEAwIF4DANBgkqhkiG9w0BAQsFAAOCAgEAcQSSa8X/UZvkUoeZ2GpxW97XAwC69abfa8D0
+YHMxFSXKAOxETEPzhyWKTsvXulgWAsGzjHyPM4Lw0YXTTyvN8thMmnyQyfbXbnb4v+IGN+RPmNBL
+HgNRad2Twwx8QX6CjX86H75w2cg0njWsG9CqougiQRZrg/n2StX9az2pM8bpGlLsRu8GL7WMJU4T
+4summjPUw2rBWq2h3FlGB9DzFI6KSVFVsEnFvmt0GsgsBQGIkDT85zoghbiRQwNE5r27fdztBCXg
+x71yQLqKBZEsuzopJhWq0SFB42sk0qokUA6i+8HEWqafrdmlq9AXr8dGLJRTnMvnbzEe8tvAfXPL
+mVzIrawV6c/VsWRiq+nKCDlbYWcBn1JAwmhSXGK0ydotW8YZtRsBsR1smJKR5+5lArlpvdU6Icrs
+7jyTcJvAxaQ2xV9J/aAhsy5ElkBaPzObetAIq9djVW/5atMBPj7a+uluSWkiP2yTX52TKXju3s+Z
+jqdtJkHg7iWRUXXj874SG0xE2tSCGveFydAvoHd4SS6SISFNcAhYwwMuuQ1Vu6rl30z9WFCA+bjb
+dMUkFzTofW7I9+KvKDeQjq6NssEUkcHvCMdVUZ96/PXgLbzRT/RQ9UhxGRoBiF0Fn8Ei+J5eOHgz
+MEpj8d1XBMRyXYPlf9J1vLt0OC3M0+OGd0jFJyE=</X509Certificate></X509Data></KeyInfo></Signature></NFe><protNFe versao="3.10"><infProt Id="ID131182811388209">
+  <tpAmb>1</tpAmb>
+  <verAplic>14.1.17</verAplic>
+  <chNFe>31180104156194000412550010002856361031617538</chNFe>
+  <dhRecbto>2018-01-16T17:54:40-02:00</dhRecbto>
+  <nProt>131182811388209</nProt>
+  <digVal>ttaYV4DGE7zO88lgUM62hkB9Nks=</digVal>
+  <cStat>100</cStat>
+  <xMotivo>Autorizado o uso da NF-e</xMotivo>
+</infProt></protNFe></nfeProc>
