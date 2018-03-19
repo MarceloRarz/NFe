@@ -9,7 +9,7 @@ uses
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   ACBrBase, ACBrDFe, ACBrCTe, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
-  System.ImageList, Vcl.ImgList;
+  System.ImageList, Vcl.ImgList, Vcl.Imaging.pngimage, Vcl.Menus, pcnConversao;
 
 type
   TfrmCTe = class(TForm)
@@ -30,13 +30,11 @@ type
     edtConsultaIniCTe: TMaskEdit;
     edtConsultaFimCTe: TMaskEdit;
     rgSituacaoCTe: TRadioGroup;
-    dbgListarCTe: TDBGrid;
     tbsConsultarCTE: TTabSheet;
     GroupBox2: TGroupBox;
     Label13: TLabel;
     btnPesquisarCTE: TSpeedButton;
     edtChaveCTE: TEdit;
-    dbgConsultaCTE: TDBGrid;
     dsConsultarCTe: TDataSource;
     dsPesquisarCTe: TDataSource;
     mtbConsultaCTE: TFDMemTable;
@@ -49,12 +47,6 @@ type
     ImageList1: TImageList;
     ImageList2: TImageList;
     GroupBox3: TGroupBox;
-    Image9: TImage;
-    Label8: TLabel;
-    Label33: TLabel;
-    Image19: TImage;
-    Image1: TImage;
-    Label2: TLabel;
     GroupBox1: TGroupBox;
     Image2: TImage;
     Label1: TLabel;
@@ -62,6 +54,36 @@ type
     Image3: TImage;
     Image4: TImage;
     Label4: TLabel;
+    lblNSU: TLabel;
+    btnDistribuicaoDFE: TBitBtn;
+    edtNSU: TEdit;
+    dbgConsultaCTE: TDBGrid;
+    mtbConsultaCTEcnpj: TStringField;
+    mtbConsultaCTEnsu: TStringField;
+    mtbConsultaCTEserie: TStringField;
+    mtbConsultaCTEnumero: TStringField;
+    mtbConsultaCTErazao_social: TStringField;
+    mtbConsultaCTeIE: TStringField;
+    mtbConsultaCTEdata_download: TDateTimeField;
+    Panel1: TPanel;
+    Image6: TImage;
+    lblTotalNotas: TLabel;
+    btnFechar2: TBitBtn;
+    dbgListarCTe: TDBGrid;
+    pnlToolBarButton: TPanel;
+    Image5: TImage;
+    btnFechar: TBitBtn;
+    btnDownloadXML: TBitBtn;
+    SaveDialog1: TSaveDialog;
+    Label5: TLabel;
+    Label14: TLabel;
+    mtbConsultaCTEprotocolo: TStringField;
+    Image9: TImage;
+    Label8: TLabel;
+    Label9: TLabel;
+    Image10: TImage;
+    Image11: TImage;
+    Label10: TLabel;
     procedure btnPesquisarCTEClick(Sender: TObject);
     procedure btnListarCTeClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -70,9 +92,21 @@ type
     procedure dbgConsultaCTEDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
     procedure ACBrCTe1StatusChange(Sender: TObject);
+    procedure btnDistribuicaoDFEClick(Sender: TObject);
+    procedure btnFechar2Click(Sender: TObject);
+    procedure btnFecharClick(Sender: TObject);
+    procedure btnDownloadXMLClick(Sender: TObject);
   private
     { Private declarations }
+    gNSUConsulta: string;
+
+    function ConsultaNotasDestinadas(pNSU: string):Boolean;
+    procedure SetDataSetmtbConsulta(pChave, pNSU, pCNPJ, pStatusNota, pTipoNfe,
+      pSerie, pNumero, pRazaoSocial, pIEst, pDataConsulta, pDataEmissao: string);
     procedure LerConfiguracao;
+    procedure AtualizarContadorGrid;
+    procedure DownloadXML;
+    function  ValidarConfiguracoes: Boolean;
   public
     { Public declarations }
   end;
@@ -84,8 +118,8 @@ implementation
 
 {$R *.dfm}
 
-uses uDMCTe, uDMConfiguracao, System.IniFiles, ACBrDFeSSL, pcnConversao,
-  blcksock, pcteConversaoCTe, ufrmStatus;
+uses uDMCTe, uDMConfiguracao, System.IniFiles, ACBrDFeSSL,
+  blcksock, pcteConversaoCTe, ufrmStatus, uAguarde, uFuncoesGeral, uConstantes;
 
 procedure TfrmCTe.ACBrCTe1StatusChange(Sender: TObject);
 begin
@@ -168,6 +202,66 @@ begin
                end;
  end;
  Application.ProcessMessages;
+end;
+
+procedure TfrmCTe.AtualizarContadorGrid;
+begin
+  if mtbConsultaCTe.RecordCount > 0 then
+  begin
+   mtbConsultaCTe.First;
+   dbgConsultaCTe.SetFocus;
+   lblTotalNotas.Visible := True;
+   lblTotalNotas.Caption := 'Total de Registros: ' + mtbConsultaCTe.RecordCount.ToString;
+  end
+  else
+  begin
+    lblTotalNotas.Visible := False;
+  end;
+end;
+
+procedure TfrmCTe.btnDistribuicaoDFEClick(Sender: TObject);
+begin
+  try
+    DMConfiguracao.qryConfiguracao.Close;
+    DMConfiguracao.qryConfiguracao.Open;
+
+    if edtNSU.Text <> EmptyStr then
+      gNSUConsulta := FormatFloat('0000000000000000',string(edtNSU.Text).ToInteger);
+
+    mtbConsultaCTE.DisableControls;
+
+    frmAguarde := TfrmAguarde.Create(Self);
+    frmAguarde.Show;
+
+    while not ConsultaNotasDestinadas(gNSUConsulta) do
+    begin
+    end;
+
+   DMConfiguracao.SetUltimoNSU_CTE(gNSUConsulta);
+
+   mtbConsultaCTe.EnableControls;
+   AtualizarContadorGrid;
+   frmAguarde.Close;
+
+  finally
+    FreeAndNil(frmAguarde);
+    gNSUConsulta := EmptyStr;
+  end;
+end;
+
+procedure TfrmCTe.btnDownloadXMLClick(Sender: TObject);
+begin
+  DownloadXML;
+end;
+
+procedure TfrmCTe.btnFechar2Click(Sender: TObject);
+begin
+  Close;
+end;
+
+procedure TfrmCTe.btnFecharClick(Sender: TObject);
+begin
+  Close;
 end;
 
 procedure TfrmCTe.btnListarCTeClick(Sender: TObject);
@@ -258,6 +352,142 @@ begin
   edtChaveCTe.Clear;
 end;
 
+function TfrmCTe.ConsultaNotasDestinadas(pNSU: string): Boolean;
+var
+  UF,
+  CNPJ,
+  Chave,
+  StatusNota,
+  sChave,
+  sDataEmissao,
+  sCNPJ,
+  sRazaoSocial,
+  sNumero,
+  sSerie,
+  sIEst,
+  sNSU,
+  sTipoNFe,
+  SituacaoOperacao,
+  DataConsulta,
+  protocolo,
+  sValor: string;
+  Valor:Double;
+  I: Integer;
+begin
+  Chave := dspesquisarCTe.DataSet.FieldByName('chave').AsString;
+  CNPJ  := DMConfiguracao.qryConfiguracaoCNPJ.AsString;
+  UF    := DMConfiguracao.qryConfiguracaoUF.AsString;
+
+  try
+    ACBrCTe1.DistribuicaoDFePorUltNSU(GetCodigoEstado(UF),CNPJ,pNSU);
+
+    if ACBrCTe1.WebServices.DistribuicaoDFe.retDistDFeInt.cStat = 138 then
+    begin
+
+      for I := 0 to Pred(ACBrCTe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count) do
+      begin
+        sSerie       := '';
+        sNumero      := '';
+        sCNPJ        := '';
+        sRazaoSocial := '';
+        sIEst        := '';
+        sNSU         := '';
+        sDataEmissao := '';
+        sTipoNFe     := '';
+        Valor        := 0;
+        StatusNota   := '';
+
+        if ACBrCTe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[i].XML <> '' then
+        begin
+          with ACBrCTe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[i] do
+          begin
+            case schema of
+                schresCTe:   begin
+                               with resCTe do
+                               begin
+                                 if chCTe <> '' then
+                                 begin
+                                   sChave :=  chCTe;
+                                   sCNPJ        := CNPJCPF;
+                                   sRazaoSocial := UTF8ToString(xNome);
+                                   sIEst        := IE;
+                                   sValor       := CurrToStr(vNF);
+                                  // SituacaoOperacao := 'MO';
+                                   sNSU         := NSU;
+                                   protocolo    := nProt;
+                                   sDataEmissao := DateTimeToStr(dhEmi);
+                                 end;
+                               end;
+                             end;
+
+               schprocCte: begin
+                               with resCTe do
+                               begin
+                                 if chCTe <> '' then
+                                 begin
+                                   sChave :=  chCTe;
+                                   sCNPJ        := CNPJCPF;
+                                   sRazaoSocial := UTF8ToString(xNome);
+                                   sIEst        := IE;
+                                   sValor       := CurrToStr(vNF);
+                               //   SituacaoOperacao := 'MO';
+                                   sNSU         := NSU;
+                                   protocolo    := nProt;
+                                   sDataEmissao := DateTimeToStr(dhEmi);
+                                 end;
+                               end;
+                             end;
+
+                schprocEventoCTe:begin
+                                   with procEvento do
+                                   begin
+                                     if chCTe <> '' then
+                                     begin
+                                       sChave       := chCTe;
+                                       sDataEmissao := DateTimeToStr(dhEvento);
+                                       sCNPJ        := detevento.emit.CNPJ;
+                                       sRazaoSocial := UTF8ToString(detevento.emit.xNome);
+                                       sIEst        := detevento.emit.IE;
+                                     end;
+                                   end;
+                                  end;
+            end;
+
+          end;
+        end;
+
+        sSerie       := Copy(sChave, 23, 3);
+        sNumero      := Copy(sChave, 26, 9);
+
+        sNSU := ACBrCTe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[i].NSU;
+
+        case ACBrCTe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[i].procEvento.tpEvento of
+         teCCE:             StatusNota := 'E';
+         teCancelamento:    StatusNota := 'C';
+         teMDFeAutorizado2: StatusNota := 'D';
+        end;
+
+        DataConsulta := DateTimeToStr(now);
+
+        DMCTe.SalvarDistribuicaoDFE(sChave, sNSU, sCNPJ, StatusNota, sTipoNfe, sSerie,
+                                    sNumero, sRazaoSocial, sIEst, DataConsulta , sDataEmissao);
+
+        SetDataSetmtbConsulta(sChave, sNSU, sCNPJ, StatusNota, sTipoNfe, sSerie,
+                              sNumero, sRazaoSocial, sIEst, DataConsulta , sDataEmissao);
+
+      end;
+    end;
+    gNSUConsulta := sNSU;
+  except
+    {Gravar o Último NSU em caso de erro}
+    Result := True;
+    gNSUConsulta := sNSU;
+  end;
+
+  Result := True; /// gNSUConsulta = sNSU;
+  gNSUConsulta := sNSU;
+  edtNSU.Text := gNSUConsulta;
+end;
 procedure TfrmCTe.dbgConsultaCTEDrawColumnCell(Sender: TObject;
   const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
 begin
@@ -304,9 +534,83 @@ begin
   end;
 end;
 
+procedure TfrmCTe.DownloadXML;
+var
+  Chave, CNPJ, UF, NSU: string;
+  i: integer;
+  v: Boolean;
+  XMLDocument1: TMemoryStream;
+  ArqXML: TStream;
+begin
+
+  if dspesquisarCTe.DataSet.FieldByName('nsu').AsString.IsEmpty then
+  begin
+    Application.MessageBox(PWideChar('Não foi possível realizar o download! NSU não informado.'), GESTOR_NFE, MB_OK + MB_ICONWARNING);
+    Exit;
+  end;
+
+  try
+    DMConfiguracao.qryConfiguracao.Close;
+    DMConfiguracao.qryConfiguracao.Open;
+
+    Chave := dspesquisarCTe.DataSet.FieldByName('chave').AsString;
+    CNPJ  := DMConfiguracao.qryConfiguracaoCNPJ.AsString;
+    UF    := DMConfiguracao.qryConfiguracaoUF.AsString;
+    NSU   := dspesquisarCTe.DataSet.FieldByName('nsu').AsString;
+
+  except
+    on e:exception do
+    begin
+      Application.MessageBox(PWideChar('Não foi possível enviar o evento de operação ao Sefaz' + #13 +
+        'Motivo: ' + e.Message), GESTOR_NFE, MB_OK + MB_ICONWARNING);
+      Exit;
+    end;
+  end;
+
+  {DownLoad XML da NFe}
+  try
+    ACBrCTe1.DistribuicaoDFePorNSU(GetCodigoEstado(UF),CNPJ , NSU);
+    with ACBrCTe1.WebServices.DistribuicaoDFe.retDistDFeInt do
+    begin
+      if cStat = 138 then
+      begin
+        for i := 0 to docZip.Count - 1 do
+        begin
+
+          if docZip.Items[0].schema in [schprocCTe,schresCTe,schprocEventoCTe] then //verifica se o arquivo é o XML da NFe (-nfe.xml)
+          begin
+            XML := docZip.Items[0].XML;
+
+            ArqXML := TStringStream.Create(XML);
+            XMLDocument1 := TMemoryStream.Create;
+            XMLDocument1.LoadFromStream(ArqXML);
+            XMLDocument1.Position := 0;
+
+            SaveDialog1.FileName := Chave + '.xml';
+            if SaveDialog1.Execute then
+            begin
+              XMLDocument1.SaveToFile(SaveDialog1.FileName);
+              Application.MessageBox('Aquivo salvo com sucesso!', GESTOR_NFE, MB_OK + MB_ICONINFORMATION);
+            end;
+          end;
+        end;
+      end;
+    end;
+
+  except
+    on e:exception do
+    Application.MessageBox(PWideChar('Não foi possível realizar o download do XML' + #13 +
+      'Motivo: ' + e.Message), GESTOR_NFE, MB_OK + MB_ICONWARNING);
+  end;
+end;
+
 procedure TfrmCTe.FormCreate(Sender: TObject);
 begin
   DMCTe := TDMCTe.Create(Self);
+  DMConfiguracao := TDMConfiguracao.Create(Self);
+
+  DMConfiguracao.qryConfiguracao.open;
+  edtNSU.Text := DMConfiguracao.qryConfiguracaoULTIMONSU_CTE.AsString;
 
   LerConfiguracao;
 end;
@@ -319,7 +623,6 @@ var
   Estado,
   NumCertificado: string;
   FormaEmissao,
-  ModeloDF,
   VersaoDF: Integer;
 begin
   IniFile := ExtractFilePath( Application.ExeName ) + 'configACBR.ini';
@@ -327,27 +630,21 @@ begin
 
   try
     FormaEmissao := Ini.ReadInteger( 'Geral','FormaEmissao',0) ;
-    ModeloDF     := Ini.ReadInteger( 'Geral','ModeloDF',0) ;
     VersaoDF     := Ini.ReadInteger( 'Geral','VersaoDF',0) ;
     Estado       := Ini.ReadString( 'WebService','UF','') ;
   finally
      Ini.Free ;
   end;
 
-  try
-    DMConfiguracao := TDMConfiguracao.Create(Self);
+  with DMConfiguracao do
+  begin
+    qryConfiguracao.Close;
+    qryConfiguracao.Open;
 
-    with DMConfiguracao do
-    begin
-      qryConfiguracao.Close;
-      qryConfiguracao.Open;
-
-      Senha := qryConfiguracaoSENHACERTIFICADO.AsString;
-      NumCertificado := qryConfiguracaoNUMEROSERIE.AsString;
-    end;
-  finally
-    FreeAndNil(DMConfiguracao);
+    Senha := qryConfiguracaoSENHACERTIFICADO.AsString;
+    NumCertificado := qryConfiguracaoNUMEROSERIE.AsString;
   end;
+
 
   {Conhecimento de Transportes}
   ACBrCTe1.Configuracoes.Certificados.Senha       := Senha;
@@ -366,9 +663,8 @@ begin
      RetirarAcentos        := True;
      FormatoAlerta         := 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.';
      FormaEmissao          := TpcnTipoEmissao(FormaEmissao);
-//     ModeloDF              := TModeloCTE(ModeloDF);
-//     VersaoDF              := TVersaoCTE(VersaoDF);
      Salvar                := True;
+     ModeloDF              := moCTe;
    end;
 
   with ACBrCTe1.Configuracoes.WebServices do
@@ -391,13 +687,71 @@ begin
      Salvar             := False;
      SepararPorMes      := False;
      AdicionarLiteral   := False;
-    // EmissaoPathNFe     := False;
-   //  SalvarEvento       := False;
      SepararPorCNPJ     := False;
      SepararPorModelo   := False;
      PathSalvar         := ExtractFilePath(Application.ExeName) + 'Logs\CTe';
      PathSchemas        := ExtractFilePath(Application.ExeName) + 'Schemas\CTe\';
    end;
+end;
+
+procedure TfrmCTe.SetDataSetmtbConsulta(pChave, pNSU, pCNPJ, pStatusNota,
+  pTipoNfe, pSerie, pNumero, pRazaoSocial, pIEst, pDataConsulta,
+  pDataEmissao: string);
+var
+  TipoCTe: String;
+begin
+  case mtbConsultaCTe.State of
+    dsInactive: begin
+                  mtbConsultaCTe.Open;
+                  mtbConsultaCTe.Append;
+                end;
+
+    dsBrowse:   begin
+                  if mtbConsultaCTe.Locate('chave; nsu', VarArrayOf([pChave,pNSU]),[]) then
+                    mtbConsultaCTe.Edit
+                else
+                  mtbConsultaCTe.Append;
+                end;
+    end;
+
+//  if UpperCase(pTipoNfe) = 'E' then
+//    TipoCTe := 'Entrada'
+//  else
+//    TipoCTe := 'Saída';
+
+  mtbConsultaCTeChave.AsString        := pChave;
+  mtbConsultaCTeSituacao.AsString     := pStatusNota;
+//  mtbConsultaCTeTipoNFE.AsString      := TipoNFE; {Entrada - Saída};
+  mtbConsultaCTecnpj.AsString         := pCNPJ;
+  mtbConsultaCTeIE.AsString           := pIEst;
+  mtbConsultaCTeNSU.AsString          := pNSU;
+  mtbConsultaCTeserie.AsString        := pSerie;
+  mtbConsultaCTenumero.AsString       := pNumero;
+  mtbConsultaCTerazao_social.AsString := pRazaoSocial;
+  mtbConsultaCTeDataEmissao.AsString  := pDataEmissao;
+  mtbConsultaCTeDataConsulta.AsString := pDataConsulta;
+  mtbConsultaCTe.Post;
+end;
+
+function TfrmCTe.ValidarConfiguracoes: Boolean;
+begin
+  Result := True;
+
+  if DMConfiguracao.qryConfiguracaoCNPJ.AsString.IsEmpty then
+  begin
+    Application.MessageBox(PWideChar('CNPJ não informado!' + #13 +
+      'Para informar o CNPJ é necessário ir em Configurações -> Empresa -> Aba Empresa' ),
+      GESTOR_NFE, MB_OK + MB_ICONWARNING);
+    Result := False;
+  end;
+
+  if DMConfiguracao.qryConfiguracaoUF.AsString.IsEmpty then
+  begin
+    Application.MessageBox(PWideChar('UF não informada!' + #13 +
+      'Para informar a UF é necessário ir em Configurações -> Empresa -> Aba Empresa' ),
+      GESTOR_NFE, MB_OK + MB_ICONWARNING);
+    Result := False;
+  end;
 end;
 
 end.

@@ -64,7 +64,8 @@ data_emissao date,
 data_consulta date,
 situacao varchar2(1),
 status integer
-);
+);  
+  
   
 ALTER TABLE cte ADD (
   CONSTRAINT cte_pk PRIMARY KEY (ID));

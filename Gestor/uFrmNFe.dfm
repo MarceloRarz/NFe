@@ -23,7 +23,7 @@ object frmNFe: TfrmNFe
     Top = 0
     Width = 1212
     Height = 692
-    ActivePage = tbsConsultarNFE
+    ActivePage = tbsListarNFE
     Align = alClient
     TabOrder = 0
     OnChange = pgNFEChange
@@ -128,21 +128,21 @@ object frmNFe: TfrmNFe
           TabOrder = 1
           object Label4: TLabel
             Left = 24
-            Top = 25
+            Top = 33
             Width = 13
             Height = 13
             Caption = 'De'
           end
           object Label5: TLabel
             Left = 154
-            Top = 25
+            Top = 33
             Width = 6
             Height = 13
             Caption = #224
           end
           object edtEmissaoFim: TMaskEdit
             Left = 175
-            Top = 21
+            Top = 29
             Width = 92
             Height = 21
             EditMask = '!99/99/9999;1;_'
@@ -152,7 +152,7 @@ object frmNFe: TfrmNFe
           end
           object edtEmissaoIni: TMaskEdit
             Left = 46
-            Top = 21
+            Top = 29
             Width = 92
             Height = 21
             EditMask = '!99/99/9999;1;_'
@@ -242,11 +242,6 @@ object frmNFe: TfrmNFe
             Expanded = False
             FieldName = 'SERIE'
             Title.Caption = 'S'#233'rie'
-            Title.Font.Charset = DEFAULT_CHARSET
-            Title.Font.Color = clWindowText
-            Title.Font.Height = -11
-            Title.Font.Name = 'Tahoma'
-            Title.Font.Style = []
             Width = 28
             Visible = True
           end
@@ -4159,7 +4154,7 @@ object frmNFe: TfrmNFe
     Left = 551
     Top = 358
     Bitmap = {
-      494C010104000800F00010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010104000800F40010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -4478,6 +4473,7 @@ object frmNFe: TfrmNFe
     end
     object mtbConsultacnpj: TStringField
       FieldName = 'cnpj'
+      EditMask = '00\.000\.000\/0000\-00;0;_'
       Size = 14
     end
     object mtbConsultaIE: TStringField
@@ -4516,7 +4512,7 @@ object frmNFe: TfrmNFe
     Left = 496
     Top = 360
     Bitmap = {
-      494C010102000800440010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000800480010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000000000000000000000000000FDFDFC0000000000000000000000

@@ -35,6 +35,7 @@ type
   public
     { Public declarations }
     procedure SetUltimoNSU_NFE(pNSU: string);
+    procedure SetUltimoNSU_CTE(pNSU: string);
   end;
 
 var
@@ -49,6 +50,13 @@ uses uDMPrincipal;
 {$R *.dfm}
 
 { TDMConfiguracao }
+
+procedure TDMConfiguracao.SetUltimoNSU_CTE(pNSU: string);
+begin
+  qryConfiguracao.Edit;
+  qryConfiguracaoULTIMONSU_CTE.AsString := pNSU;
+  qryConfiguracao.Post;
+end;
 
 procedure TDMConfiguracao.SetUltimoNSU_NFE(pNSU: string);
 begin

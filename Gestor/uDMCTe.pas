@@ -23,6 +23,22 @@ type
     qryPesquisarCTeDATA_CONSULTA: TDateTimeField;
     qryPesquisarCTeSITUACAO: TStringField;
     qryPesquisarCTeSTATUS: TFMTBCDField;
+    qryCTECNPJ: TStringField;
+    qryCTENSU: TStringField;
+    qryCTESERIE: TStringField;
+    qryCTENUMERO: TStringField;
+    qryCTERAZAO_SOCIAL: TStringField;
+    qryCTEINSCRICAO_ESTADUAL: TStringField;
+    qryCTETIPO_NOTA: TStringField;
+    qryCTEDATA_DOWNLOAD: TDateTimeField;
+    qryPesquisarCTeCNPJ: TStringField;
+    qryPesquisarCTeNSU: TStringField;
+    qryPesquisarCTeSERIE: TStringField;
+    qryPesquisarCTeNUMERO: TStringField;
+    qryPesquisarCTeRAZAO_SOCIAL: TStringField;
+    qryPesquisarCTeINSCRICAO_ESTADUAL: TStringField;
+    qryPesquisarCTeTIPO_NOTA: TStringField;
+    qryPesquisarCTeDATA_DOWNLOAD: TDateTimeField;
   private
     { Private declarations }
   public
@@ -30,6 +46,10 @@ type
   procedure SalvarConsultaCTe(pChave, pSituacao, pStatus, pDataConsulta, pDataEmissao: string);
   procedure PesquisarCTe(pChave, pSituacao, pDTConsultaIni, pDTConsultaFim,
     pDTEmissaoIni, pDTEmissaoFim : string);
+  procedure SalvarDistribuicaoDFE(pChave, pNSU, pCNPJ, pStatusNota, pTipoNfe,
+    pSerie, pNumero, pRazaoSocial, pIEst, pDataConsulta, pDataEmissao: string);
+  function AtualizarSituacaoOperacao(pChave, pSituacaoOperacao: string; pDataDownload: TDateTime): Boolean; overload;
+  function AtualizarSituacaoOperacao(pChave, pSituacaoOperacao: string): Boolean; overload;
   end;
 
 var
@@ -39,9 +59,38 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
+uses uDMPrincipal;
+
 {$R *.dfm}
 
 { TDataModule1 }
+
+function TDMCTe.AtualizarSituacaoOperacao(pChave, pSituacaoOperacao: string;
+  pDataDownload: TDateTime): Boolean;
+var
+  QryNFe: TFDQuery;
+  SQL: string;
+begin
+  try
+    QryNFe := TFDQuery.Create(nil);
+    QryNFe.Connection := DMPrincipal.FDConn;
+
+    if pDataDownload = 0 then
+      QryNFe.ExecSQL('UPDATE CTE SET SITUACAO_OPERACAO = :pSITUACAOOPERACAO WHERE ' +
+                     'CHAVE = :pCHAVE',[pSituacaoOperacao, pChave])
+    else
+      QryNFe.ExecSQL('UPDATE CTE SET SITUACAO_OPERACAO = :pSITUACAOOPERACAO, data_download = to_date(:pDATADOWNLOAD,''dd/mm/yy'') WHERE ' +
+                     'CHAVE = :pCHAVE',[pSituacaoOperacao, pDataDownload , pChave]);
+  finally
+    FreeAndNil(QryNFe);
+  end;
+end;
+
+function TDMCTe.AtualizarSituacaoOperacao(pChave,
+  pSituacaoOperacao: string): Boolean;
+begin
+  AtualizarSituacaoOperacao(pChave, pSituacaoOperacao,0);
+end;
 
 procedure TDMCTe.PesquisarCTe(pChave, pSituacao, pDTConsultaIni,
   pDTConsultaFim, pDTEmissaoIni, pDTEmissaoFim: string);
@@ -93,6 +142,28 @@ begin
   qryCTeSITUACAO .AsString     := pSituacao;
   qryCTeSTATUS.AsString        := pStatus;
 
+  qryCTe.Post;
+end;
+
+procedure TDMCTe.SalvarDistribuicaoDFE(pChave, pNSU, pCNPJ, pStatusNota,
+  pTipoNfe, pSerie, pNumero, pRazaoSocial, pIEst, pDataConsulta, pDataEmissao: string);
+begin
+  qryCTe.Close;
+  qryCTe.ParamByName('pchave').AsString := pChave;
+  qryCTe.Open;
+  qryCTe.Edit;
+
+  qryCTeCHAVE.AsString              := pChave;
+  qryCTeDATA_EMISSAO.AsString       := pDataEmissao;
+  qryCTeDATA_CONSULTA.AsString      := pDataConsulta;
+  qryCTeSITUACAO.AsString           := pStatusNota;
+  qryCTeTIPO_NOTA.AsString          := pTipoNFE; {Entrada - Saída};
+  qryCTeCNPJ.AsString               := pCNPJ;
+  qryCTeINSCRICAO_ESTADUAL.AsString := pIEst;
+  qryCTeNSU.AsString                := pNSU;
+  qryCTeSERIE.AsString              := pSerie;
+  qryCTeNUMERO.AsString             := pNumero;
+  qryCTeRAZAO_SOCIAL.AsString       := copy(pRazaoSocial,1,150);
   qryCTe.Post;
 end;
 

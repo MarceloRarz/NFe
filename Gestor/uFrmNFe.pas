@@ -739,12 +739,13 @@ end;
 procedure TfrmNFe.FormCreate(Sender: TObject);
 begin
   DMConfiguracao := TDMConfiguracao.Create(nil);
+
   DMConfiguracao.qryConfiguracao.open;
   edtNSU.Text := DMConfiguracao.qryConfiguracaoULTIMONSU_NFE.AsString;
 
   DMNFe := TDMNFe.Create(Self);
 
-  TStringField(mtbConsultacnpj).EditMask := '00\.000\.000\/0000\-00;0;_';
+  TStringField(mtbConsultacnpj).EditMask := '';
 
   LerConfiguracao;
 end;
